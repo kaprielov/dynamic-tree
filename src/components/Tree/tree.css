@@ -1,0 +1,17 @@
+ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+li {
+    padding: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #e0f3ff;
+    font-weight: bold;
+    color: #0078d4;
+    border-radius: 4px;
+}

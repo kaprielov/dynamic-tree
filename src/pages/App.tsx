@@ -1,17 +1,30 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react';
 import { useFetch } from '@/hooks/useFetch';
 import { fetchTreeData } from '@/api';
 import { TreeNode } from '@/types';
-import Tree from "@/components/Tree"
+import Tree from '@/components/Tree';
 import Sidebar from '@/components/Sidebar';
+import { addUniqueIds } from '@/utils';
 
 const App = () => {
   const { data, loading, error } = useFetch<TreeNode[]>(fetchTreeData);
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
+  const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
 
   const handleSelectEntry = (id: string) => {
     setSelectedEntryId(id);
   };
+
+  const handleNodeClick = (id: string) => {
+    setActiveNodeId((prev) => (prev === id ? null : id));
+  };
+
+  const treeData = useMemo(() => {
+    if (data) {
+      return addUniqueIds(data);
+    }
+    return [];
+  }, [data]);
 
   // TODO : create a loader component
   if (loading) return <div>Loading...</div>;
@@ -22,7 +35,12 @@ const App = () => {
     <div style={{ display: 'flex', gap: '20px' }}>
       <div>
         <h2>Tree</h2>
-        <Tree data={data} onSelectEntry={handleSelectEntry} />
+        <Tree
+          data={treeData}
+          onSelectEntry={handleSelectEntry}
+          onNodeClick={handleNodeClick}
+          activeNodeId={activeNodeId}
+        />
       </div>
       <div>
         <h2>Sidebar</h2>

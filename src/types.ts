@@ -4,6 +4,11 @@ export interface TreeNode {
   children?: TreeNode[];
 }
 
+export interface TreeNodeWithId extends TreeNode {
+  elementId: string;
+  children?: TreeNodeWithId[];
+}
+
 export interface EntryData {
   id: string;
   name: string;
