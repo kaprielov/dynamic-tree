@@ -15,3 +15,89 @@ li {
     color: #0078d4;
     border-radius: 4px;
 }
+
+.tree-root, .tree-root ul {
+    list-style: none;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.tree-item {
+    position: relative;
+    margin: 2px 0;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.tree-dragged-item {
+    padding: 4px 8px;
+    background: #eee;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    min-width: 100px;
+}
+
+.tree-item-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 24px;
+}
+
+.drag-handle {
+    cursor: grab;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.tree-item-label {
+    white-space: nowrap;
+}
+
+.tree-item.drop-inside {
+    position: relative;
+}
+
+.tree-item.drop-inside::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 0 2px blue;
+    pointer-events: none;
+}
+
+.tree-item.drop-above {
+    position: relative;
+}
+
+.tree-item.drop-above::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: blue;
+    pointer-events: none;
+}
+
+.tree-item.drop-below {
+    position: relative;
+}
+
+.tree-item.drop-below::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: blue;
+    pointer-events: none;
+}

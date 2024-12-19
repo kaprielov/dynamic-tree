@@ -14,3 +14,5 @@ export interface EntryData {
   name: string;
   description?: string;
 }
+
+export type DragPosition = 'above' | 'below' | 'inside' | null;
