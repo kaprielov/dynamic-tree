@@ -39,3 +39,8 @@ Ensure the application is accessible to all users by:
 If more data becomes available, it is better to use `Map` rather than `while` to quickly traverse the tree.
 For very large trees, implement virtualization to render only the visible portions of the tree, improving performance.
 Use libraries like react-window or react-virtualized to handle virtualization.
+
+## Known issues
+- Bugs with drag and drop. Can't drag to the beginning and end
+- Cover the rest of the components with tests
+- ESlint is not strict enough
