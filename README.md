@@ -12,6 +12,12 @@ npm install
 npm run dev
 ```
 
+## Run test
+
+```
+npm test
+```
+
 ## Info
 
 Hold cmd button to put element inside
