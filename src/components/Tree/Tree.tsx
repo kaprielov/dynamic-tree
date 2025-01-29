@@ -5,7 +5,7 @@ import { addUniqueIds } from '@/utils';
 import { useFetch } from '@/hooks/useFetch';
 import { fetchTreeData } from '@/api';
 import TreeNodeItem from '@/components/TreeNodeItem';
-import { handleDragStart, handleDragOver, handleDragEnd } from './treeDragHandlers';
+import { handleDragStart, handleDragMove, handleDragEnd } from './treeDragHandlers';
 import './tree.css';
 
 interface TreeProps {
@@ -34,8 +34,8 @@ const Tree = ({ onSelectEntry }: TreeProps) => {
     handleDragStart(event, treeData, setDraggedNode);
   }
 
-  const onDragOver = (event: DragOverEvent) => {
-    handleDragOver(event, overId, dragPosition, setOverId, setDragPosition);
+  const onDragMove = (event: DragOverEvent) => {
+    handleDragMove(event, overId, dragPosition, setOverId, setDragPosition);
   }
 
   const onDragEnd = (event: DragEndEvent) => {
@@ -50,7 +50,7 @@ const Tree = ({ onSelectEntry }: TreeProps) => {
     <DndContext
       onDragEnd={onDragEnd}
       onDragStart={onDragStart}
-      onDragOver={onDragOver}
+      onDragMove={onDragMove}
     >
       <ul className="tree-root">
         {treeData.map((node) => (

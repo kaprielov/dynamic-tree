@@ -49,14 +49,14 @@ export const handleDragStart = (
  * @param setOverId - Function to update the hovered element's ID.
  * @param setDragPosition - Function to update the drag position.
  */
-export const handleDragOver = (
+export const handleDragMove = (
   event: DragOverEvent,
   overId: string | null,
   dragPosition: DragPosition,
   setOverId: (id: string | null) => void,
   setDragPosition: (position: DragPosition) => void
 ) => {
-  const { over, activatorEvent } = event; // Destructure relevant properties from the event
+  const { over, activatorEvent, delta } = event; // Destructure relevant properties from the event
 
   // If there's no element being hovered over, reset the overId and dragPosition
   if (!over) {
@@ -68,13 +68,12 @@ export const handleDragOver = (
   const newOverId = over.id.toString(); // Get the ID of the hovered element as a string
   let newDragPosition: DragPosition = null;
 
-  // Select the DOM element corresponding to the hovered ID
-  const droppableElement = document.querySelector(`[data-id="${over.id}"]`);
-
   // If the droppable element exists and the activator event is a mouse event
-  if (droppableElement && activatorEvent instanceof MouseEvent) {
-    const rect = droppableElement.getBoundingClientRect(); // Get the bounding rectangle of the element
-    const y = activatorEvent.clientY - rect.top; // Calculate the Y position of the mouse relative to the element
+  if (activatorEvent instanceof MouseEvent) {
+    const { rect } = over; // Get the bounding rectangle of the element
+    const { top, height } = rect; // Get the bounding rectangle of the element
+    const y = activatorEvent.clientY + delta.y; // Calculate the Y position of the mouse relative to the element
+    // const y = activatorEvent.clientY + delta.y - rect.top; // Calculate the Y position of the mouse relative to the element
 
     // Determine if a modifier key (Ctrl or Meta) is pressed
     const insideKeyPressed = activatorEvent.ctrlKey || activatorEvent.metaKey; 
@@ -82,7 +81,7 @@ export const handleDragOver = (
     // Decide the new drag position based on mouse position and modifier key
     newDragPosition = insideKeyPressed 
       ? 'inside' 
-      : (y < rect.height / 2 ? 'above' : 'below');
+      : (y < (top + height / 2) ? 'above' : 'below');
   }
 
   // Update the overId state if it has changed
@@ -151,5 +150,5 @@ export const handleDragEnd = (
 
   setTreeData(updatedTree); // Update the tree data with the new structure
 
-  console.log('Updated Tree:', JSON.stringify(updatedTree, null, 2)); // Log the updated tree for debugging
+  // console.log('Updated Tree:', JSON.stringify(updatedTree, null, 2)); // Log the updated tree for debugging
 };
