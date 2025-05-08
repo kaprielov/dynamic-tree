@@ -13,7 +13,6 @@ const App = () => {
     <div style={{ display: 'flex', gap: '20px' }}>
       <div>
         <h2>Tree</h2>
-        <p style={{ color: '#0078d4' }}>Hold cmd button to put element inside</p>
         <Tree onSelectEntry={handleSelectEntry}/>
       </div>
       <div>

@@ -73,15 +73,17 @@ export const handleDragMove = (
     const { rect } = over; // Get the bounding rectangle of the element
     const { top, height } = rect; // Get the bounding rectangle of the element
     const y = activatorEvent.clientY + delta.y; // Calculate the Y position of the mouse relative to the element
-    // const y = activatorEvent.clientY + delta.y - rect.top; // Calculate the Y position of the mouse relative to the element
 
-    // Determine if a modifier key (Ctrl or Meta) is pressed
-    const insideKeyPressed = activatorEvent.ctrlKey || activatorEvent.metaKey; 
+    const topBoundary = top + height / 3;
+    const bottomBoundary = top + (2 * height) / 3;
 
-    // Decide the new drag position based on mouse position and modifier key
-    newDragPosition = insideKeyPressed 
-      ? 'inside' 
-      : (y < (top + height / 2) ? 'above' : 'below');
+    if (y < topBoundary) {
+      newDragPosition = 'above';
+    } else if (y < bottomBoundary) {
+      newDragPosition = 'inside';
+    } else {
+      newDragPosition = 'below';
+    }
   }
 
   // Update the overId state if it has changed
