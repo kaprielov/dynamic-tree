@@ -2,6 +2,11 @@
 
 It is a React-based application that allows users to interactively manage and organize hierarchical data structures through an intuitive drag-and-drop interface. Users can rearrange tree nodes, insert nodes as children or siblings, and view detailed information about each node in a sidebar.
 
+## Live Demo
+
+Check out the live version of this project here:
+https://stackblitz.com/github/kaprielov/dynamic-tree
+
 ## Quick Start
 
 Follow these steps to set up the project locally:
