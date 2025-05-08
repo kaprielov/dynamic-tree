@@ -25,8 +25,6 @@ npm test
 
 ## Info
 
-Hold cmd button to put element inside
-
 React StrictMode is enabled by default. This may cause repeated requests or effects in development mode. This is expected behavior and helps detect potential side effects in your code.
 
 ## Recommendations
