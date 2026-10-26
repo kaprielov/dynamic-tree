@@ -5,7 +5,7 @@ import { useDraggable, useDroppable } from '@dnd-kit/core';
 
 interface TreeNodeItemProps {
   node: TreeNodeWithId;
-  onSelectEntry: (id: string) => void;
+  onSelectEntry: (id: string | null) => void;
   onNodeClick: (id: string) => void;
   activeNodeId: string | null;
   overId: string | null;
@@ -23,30 +23,29 @@ const TreeNodeItem = ({
   const isActive = activeNodeId === node.elementId;
 
   const { setNodeRef: setDroppableRef } = useDroppable({
-    id: node.elementId
+    id: node.elementId,
   });
 
-  const { attributes, listeners, setNodeRef: setDraggableRef } = useDraggable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef: setDraggableRef,
+  } = useDraggable({
     id: node.elementId,
   });
 
   const handleClick = (event: MouseEvent) => {
     event.stopPropagation();
     onNodeClick(node.elementId);
-    if (!node.children && node.id) {
-      onSelectEntry(node.id);
-    }
   };
 
-  const highlightClass = (overId === node.elementId && dragPosition)
-    ? `drop-${dragPosition}`
-    : '';
+  const highlightClass =
+    overId === node.elementId && dragPosition ? `drop-${dragPosition}` : '';
 
   return (
     <li
       data-id={node.elementId}
       ref={setDroppableRef}
-      onClick={handleClick}
       className={cn('tree-item', highlightClass, { active: isActive })}
     >
       <div className="tree-item-content">
@@ -55,11 +54,20 @@ const TreeNodeItem = ({
           {...attributes}
           {...listeners}
           className="drag-handle"
+          aria-label={`Drag ${node.label}`}
+          type="button"
           onClick={(e) => e.stopPropagation()}
         >
           ⠿
         </button>
-        <span className="tree-item-label">{node.label}</span>
+        <button
+          type="button"
+          className="tree-item-label"
+          aria-pressed={isActive}
+          onClick={handleClick}
+        >
+          {node.label}
+        </button>
       </div>
       {node.children && node.children.length > 0 && (
         <ul>
@@ -81,4 +89,3 @@ const TreeNodeItem = ({
 };
 
 export default React.memo(TreeNodeItem);
-
